@@ -1,4 +1,5 @@
-# Copyright 2013 Telefonica InvestigaciÃ³n y Desarrollo, S.A.U
+# -*- coding: latin-1 -*-
+# Copyright 2013 Telefonica Investigación y Desarrollo, S.A.U
 #
 # This file is part of Mondongo Portal
 #
@@ -121,7 +122,7 @@ ROOT_URLCONF = 'mondongo_server.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'mondongo_server.wsgi.application'
 
-TEMPLATE_DIRS = ('D:/python-workspace/MondongoServer/templates',)
+TEMPLATE_DIRS = ('D:/python-workspace/mondongo-portal/templates',)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
