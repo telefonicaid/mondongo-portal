@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load url from future %}
+
+{% block title %}Mondongo Portal - Login{% endblock %}
+
+{% block mastheadx %}
+
+    <div id="masthead2">
+        <div class="wrap">
+            <a href="/">
+                <div class="logo">acme</div>
+            </a>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block page %}
+
+    <div class="main pagehead">
+        <h1>Mondongo Portal</h1>
+    </div>
+
+    <div class="main" style="clear:both">
+
+        {% if form.errors %}
+            <strong><span style="color:red">Your username and password didn't match.
+            Please try again.</span></strong>
+        {% endif %}
+
+        <form action="{% url 'django.contrib.auth.views.login' %}" method="post">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Required</legend>
+
+                <div class="form-row form-text">
+                    <label for="id_username">Username</label>
+                    <input class="text medium" id="id_username" name="username" maxlength="30" type="text">
+                </div>
+
+                <div class="form-row form-text">
+                    <label for="id_password">Password</label>
+                    <input class="password medium" name="password" id="id_password" type="password">
+                </div>
+
+                <div style="margin-top: 12px; padding-left: 285px; font-size: 11px;"></div>
+                <div class="form-row form-button">
+                    <input class="button primary_action" type="submit" value="Log In" id="submit"/>
+                    <input type="hidden" name="next" value="{{ next }}"/>
+                </div>
+
+            </fieldset>
+        </form>
+
+    </div>
+
+    <div class="sidebar">
+        <div id="callout" class="tos">
+            <h3>This portal is just for demonstration purposes</h3>
+        </div>
+    </div>
+
+{% endblock %}

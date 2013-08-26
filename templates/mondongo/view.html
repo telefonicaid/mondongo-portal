@@ -1,0 +1,152 @@
+<!--
+
+Copyright 2013 Telefonica Investigación y Desarrollo, S.A.U
+
+This file is part of Mondongo Portal
+
+Mondongo Portal is free software: you can redistribute it and/or modify it under the terms
+of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+Mondongo Portal is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+for more details.
+
+You should have received a copy of the GNU Affero General Public License along with Mondongo Portal. If not,
+see http://www.gnu.org/licenses/.
+
+For those usages not covered by the GNU Affero General Public License please contact with fermin at tid dot es
+
+-->
+
+{% extends "base.html" %}
+
+{% block title %}Mondongo Portal - View{% endblock %}
+
+{% block mastheadx %}
+
+    <div id="masthead">
+        <div data-web-developer-element-ancestors-outline="true" style="outline: 1px solid rgb(185, 74, 72);" class="wrap">
+            <a href="/"><div class="logo">Joyent</div></a>
+
+            <div id="topnav">
+                <div id="subnav">
+
+                    <!--ul class="dropdown" style="margin-top: 3px;">
+                        <li><a href="/account">Account Settings</a></li>
+                    </ul-->
+            <span class="signin">
+              <a href="{% url 'django.contrib.auth.views.logout' %}">Sign out</a>
+            </span>
+
+
+                </div>
+
+                <span class="greeting">Hello<strong>, {{ user }}</strong></span>
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block page %}
+
+    <div class="main pagehead">
+        <h1>Cluster information</h1>
+    </div>
+
+    <div class="main" style="clear:both">
+
+        {% if results|length > 0 %}
+
+            <table border="1" id="machineList">
+                <tr>
+                    <td><strong>Name</strong></td>
+                    <td><strong>State</strong></td>
+                    <td><strong>IP</strong></td>
+                    <td><strong>Memory</strong></td>
+                    <td><strong>Disk</strong></td>
+                    <td><strong>Root pwd</strong></td>
+                    <td><strong>Admin pwd</strong></td>
+                    <td><strong>Created</strong></td>
+                </tr>
+                {% for vm in results %}
+                    <tr>
+                        {% for i in vm %}
+                            <td>{{ i }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+
+            <p><a class="button primary_action" href="{% url 'mondongo.views.view' %}">Reload</a></p>
+
+            <p>
+            <form action="{% url 'mondongo.views.destroy' %}" method="post">
+                {% csrf_token %}
+                <input class="button primary_action" type="submit" value="Destroy all"/>
+            </form>
+            </p>
+
+        {% else %}
+
+            <p>No cluster is currently running. You can create one <a
+                    href="{% url 'mondongo.views.create_form' %}">here</a>.</p>
+
+        {% endif %}
+
+    </div>
+
+{% endblock %}
+
+
+{%  comment %}
+
+{% block content %}
+
+<p>Login as: {{ user }}. <a href="{% url 'django.contrib.auth.views.logout' %}">Logout</a></p>
+
+<p>Using this page you can view an existing cluster.</p>
+
+{% if results|length > 0 %}
+
+    <table border="1">
+        <tr>
+            <td><strong>Name</strong></td>
+            <td><strong>State</strong></td>
+            <td><strong>IP</strong></td>
+            <td><strong>Memory</strong></td>
+            <td><strong>Disk</strong></td>
+            <td><strong>Root pwd</strong></td>
+            <td><strong>Admin pwd</strong></td>
+            <td><strong>Created</strong></td>
+        </tr>
+        {% for vm in results %}
+            <tr>
+            {% for i in vm %}
+                <td>{{ i }}</td>
+            {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+
+    <p>
+        <form action="{% url 'mondongo.views.destroy' %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Destroy all" />
+        </form>
+    </p>
+
+{% else %}
+
+    <p>No cluster is currently running. You can create one <a href='{% url 'mondongo.views.create_form' %}">here</a>.</p>
+
+{% endif %}
+
+<p><a href="{% url 'mondongo.views.index' %}">Back to index</a></p>
+
+{% endblock %}
+
+{% endcomment %}

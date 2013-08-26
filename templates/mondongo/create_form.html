@@ -1,0 +1,147 @@
+<!--
+
+Copyright 2013 Telefonica Investigación y Desarrollo, S.A.U
+
+This file is part of Mondongo Portal
+
+Mondongo Portal is free software: you can redistribute it and/or modify it under the terms
+of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+Mondongo Portal is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+for more details.
+
+You should have received a copy of the GNU Affero General Public License along with Mondongo Portal. If not,
+see http://www.gnu.org/licenses/.
+
+For those usages not covered by the GNU Affero General Public License please contact with fermin at tid dot es
+
+-->
+
+{% extends "base.html" %}
+
+{% block title %}Create cluster{% endblock %}
+
+{% block mastheadx %}
+
+    <div id="masthead">
+        <div data-web-developer-element-ancestors-outline="true" style="outline: 1px solid rgb(185, 74, 72);" class="wrap">
+            <a href="/"><div class="logo">Joyent</div></a>
+
+            <div id="topnav">
+                <div id="subnav">
+
+                    <!--ul class="dropdown" style="margin-top: 3px;">
+                        <li><a href="/account">Account Settings</a></li>
+                    </ul-->
+            <span class="signin">
+              <a href="{% url 'django.contrib.auth.views.logout' %}">Sign out</a>
+            </span>
+
+
+                </div>
+
+                <span class="greeting">Hello<strong>, {{ user }}</strong></span>
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block page %}
+
+    <div class="main" style="clear:both">
+
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+        <p>Using this page you can create a new cluster.</p>
+
+        <form action="{% url 'mondongo.views.create' %}" method="post">
+            {% csrf_token %}
+            <ul>
+                <li>Number of shards:
+                    <select name="n_shards">
+                        <option value="1">1</option>
+                        <option value="2" selected="true">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </li>
+                <li>Replicas per shard:
+                    <select name="shard_instances">
+                        <option value="1">1</option>
+                        <option value="2" selected="true">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                    (<input type="checkbox" name="replica_set" value="true">Use replica set</input>)
+                </li>
+                <li>
+                    Shard db: <input class="text medium" type="text" name="shard_db" />
+                </li>
+                <li>
+                    Shard collection: <input class="text medium" type="text" name="shard_col" />
+                </li>
+                <li>
+                    Shard key: <input class="text medium" type="text" name="shard_key" />
+                </li>
+            </ul>
+            <input class="button primary_action" type="submit" value="Create cluster" />
+        </form>
+
+        <p><a class="button primary_action" href="{% url 'mondongo.views.view' %}">Back to index</a></p>
+    </div>
+
+{%  endblock %}
+
+{%  comment %}
+
+{% block content %}
+
+<p>Login as: {{ user }}. <a href="{% url 'django.contrib.auth.views.logout' %}">Logout</a></p>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<p>Using this page you can create an existing cluster.</p>
+
+<form action="{% url 'mondongo.views.create' %}" method="post">
+    {% csrf_token %}
+    <ul>
+        <li>Number of shards:
+            <select name="n_shards">
+                <option value="1">1</option>
+                <option value="2" selected="true">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+        </li>
+        <li>Replicas per shard:
+            <select name="shard_instances">
+                <option value="1">1</option>
+                <option value="2" selected="true">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+            (<input type="checkbox" name="replica_set" value="true">Use replica set</input>)
+        </li>
+        <li>
+            Shard db: <input type="text" name="shard_db" />
+        </li>
+        <li>
+            Shard collection: <input type="text" name="shard_col" />
+        </li>
+        <li>
+            Shard key: <input type="text" name="shard_key" />
+        </li>
+    </ul>
+    <input type="submit" value="Create cluster" />
+</form>
+
+<p><a href="{% url 'mondongo.views.index' %}">Back to index</a></p>
+
+{% endblock %}
+
+{% endcomment %}

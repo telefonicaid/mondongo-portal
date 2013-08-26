@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Mondongo Portal - Logout{% endblock %}
+
+{% block mastheadx %}
+
+    <div id="masthead">
+        <div class="wrap">
+            <a href="/">
+                <div class="logo">acme</div>
+            </a>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block page %}
+
+    <div class="main" style="clear:both">
+
+        <p>You have been logged out. <a href={% url 'django.contrib.auth.views.login' %}>Sign in here</a>.</p>
+
+    </div>
+
+{%  endblock %}
