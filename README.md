@@ -55,7 +55,7 @@ apt-get install apache2 libapache2-mod-wsgi python-pip
 * Install Django. Note that there is python-django package available in APT, but using pip we will get the newer version:
 
 ```
-pip install django==1.5.1 requests==1.2.2
+pip install -r requirements.txt
 ```
 
 * Deploy the proyect files in a given directory. Let assume that the directory of the application (the one that contains 
