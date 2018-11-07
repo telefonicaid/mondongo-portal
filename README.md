@@ -39,7 +39,7 @@ Python package versions
 =======================
 
 * Django: 1.5.1
-* Requests: 1.2.2
+* Requests: 2.20.0
 
 Installing
 ==========
